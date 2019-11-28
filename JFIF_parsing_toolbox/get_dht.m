@@ -1,5 +1,5 @@
-function segment = parse_dht( loc_ff, jpg_data, fidorg, num )
-% parse_dht - parse the DHT segment in the JPEG file header.
+function segment = get_dht( loc_ff, jpg_data, fidorg, num )
+% GET_DHT - get the DHT segment in the JPEG file header.
 pos_c4 = find(jpg_data(loc_ff+1,1) == 196);
 pos_c4 = pos_c4(num,1);
 c = loc_ff(pos_c4,1);

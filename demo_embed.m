@@ -17,9 +17,9 @@ blk_num = blk_h * blk_w;
 %% Parse the Huffman table (DHT segment, started from FFC4).
 loc_c4 = find(jpg_data(loc_ff+1,1) == 196);
 if length(loc_c4)>1
-    data_huff_dc = parse_dht(loc_ff,jpg_data,fidorg,1);  % segment of the huffman table of DC.
+    data_huff_dc = get_dht(loc_ff,jpg_data,fidorg,1);  % segment of the huffman table of DC.
     table_huff_dc = get_huff_dc_table(data_huff_dc);
-    data_huff_ac = parse_dht(loc_ff,jpg_data,fidorg,2);   % segment of the huffman table of AC.
+    data_huff_ac = get_dht(loc_ff,jpg_data,fidorg,2);   % segment of the huffman table of AC.
     table_huff_ac = get_huff_ac_table(data_huff_ac);
 else
     error('The number of Huffman table specifications is smaller than 2!');
@@ -28,18 +28,18 @@ else
     % 	tachufftbl = fun_huff_actable(huff_tbl_ac);	%run - category - length - base code length -  base code
 end
 %% Parse the entropy-coded data.
-data_sos = parse_sos(loc_ff,jpg_data,fidorg);
-data_sos = dlt_zero(data_sos);
-bits_sos = gen_bits(data_sos);
-flag = 1;
+dec_ecs = dlt_zero(get_ecs(loc_ff,jpg_data,fidorg));
+bin_ecs = int2bin(dec_ecs,8);
+[m,n] = size(bin_ecs);
+bin_ecs = reshape(bin_ecs.',[1 m*n]);flag = 1;
 dc_app_len = zeros(blk_num,1);
 dc_code = cell(blk_num,1);  % dc_code includes huffman bits and appended bits.
 ac_code = cell(blk_num,1);  % ac_code includes huffman bits and appended bits.
 dc_pos = ones(blk_num+1,1); % dc_pos includes the position of dc_code.
 ac_pos = ones(blk_num+1,1); % ac_pos includes the position of ac_code.
 while flag <= blk_num
-    [ac_pos(flag),dc_app_len(flag,1),dc_code{flag}] = parse_dc(bits_sos, table_huff_dc, dc_pos(flag));
-    [dc_pos(flag+1), ac_code{flag}] = parse_ac(bits_sos, table_huff_ac, ac_pos(flag));
+    [ac_pos(flag),dc_app_len(flag,1),dc_code{flag}] = parse_dc(bin_ecs, table_huff_dc, dc_pos(flag));
+    [dc_pos(flag+1), ac_code{flag}] = parse_ac(bin_ecs, table_huff_ac, ac_pos(flag));
     flag = flag + 1;
 end
 dc_pos(end) = [];ac_pos(end) = [];
@@ -125,7 +125,7 @@ for i = 1:blk_num
 end
 %% Generate the stego JPEG bitstream.
 jpg_header = rpl_jpg_dht(jpg_data, loc_ff, mdf_table_huff_ac);
-jpg_ecs = gen_ecs(bits_sos,dc_code,mdf_ac_code,blk_num);
+jpg_ecs = gen_ecs(bin_ecs,dc_code,mdf_ac_code,blk_num);
 stego_jpg = [jpg_header;jpg_ecs];
 fid = fopen(strcat('stego_',img_name), 'w+');
 fwrite(fid,stego_jpg,'uint8');

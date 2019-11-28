@@ -1,8 +1,9 @@
 function G_opt = get_gvm_relationship( vlc, possible_solutions, payload, U, S)
-% 输入JPEG比特流解析过生成的VLC序列及相关信息
-% vlc - 当前图像的VLC信息
-% S - 可选峰值点数量（选择的已使用VLC的数量）
-% U - 每个选择的已使用VLC可分配到的最大未使用VLC数量
+% GET_GVM_RELATIONSHIP get the optimal GVM relationship by simulated
+% embedding.
+% vlc - the vlc statistical information
+% S - the num of selected peak bins.
+% U - the max number of zero bins assigned for each peak bin.
 num_unused = sum(vlc(:,3)==0);
 num_used = length(vlc(:,3)) - num_unused;
 %% Compute the capacity when filesize preservation
@@ -19,7 +20,7 @@ peaks = lst_peaks : num_used;
 G_opt = cell(numel(peaks),1);
 for i = 1 : numel(peaks)
     p = peaks(i);
-    fst_capacity = s_vlc(p,3);  %第一个峰值点的载荷，只分配一个未使用VLC时
+    fst_capacity = s_vlc(p,3);  % the capacity of extreme point.
     u = 0;
     flag = false;
     while ~flag
@@ -35,7 +36,7 @@ for i = 1 : numel(peaks)
     s = min(num_used - peaks(i) + 1, S);
     possible_solutions = get_feasible_solutions(num_unused, possible_solutions, u, s);
     [num_solutions,~] = size(possible_solutions);
-    output = ones(num_solutions,2) * Inf;	% 第二列是文件大小膨胀量fi - file size increment.
+    output = ones(num_solutions,2) * Inf;	% the second column is fi - file size increment.
     shifted_vlc = cell(num_solutions,1);
     for j = 1:num_solutions
         capacity = sum(s_vlc(p:p+s-1,3) .* log2(possible_solutions(j,:)+1)');

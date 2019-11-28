@@ -1,5 +1,5 @@
 function data_sos = dlt_zero(data_sos)
-%DLT_ZERO
+%DLT_ZERO delete all the zero bytes which are behind the FF byte, in the entropy-coded data.
 ind_ff = find(data_sos==255);
 m = length(ind_ff);
 i=0;

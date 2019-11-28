@@ -1,6 +1,6 @@
 function ac_table = get_huff_ac_table(seg_huff_ac)
 %GEN_HUFF_AC_TABLE parse the DHT segment of AC and obtain huffman table of AC.
-num_cat = seg_huff_ac(6:21);    % codeword of DCs for each category.
+num_cat = seg_huff_ac(6:21);    % codeword of ACs for each category.
 num_total = sum(num_cat);
 huff_size = zeros(num_total+1,1);
 huff_val = seg_huff_ac(22:22 + num_total-1,1);
@@ -17,7 +17,7 @@ tmp_code = 0;
 tmp_len_code = huff_size(1);
 ac_code_dec = zeros(num_total,1);
 ind = 1;
-% The code assignment follow by Canonical Huffman coding.
+% The code assignment is followed as Canonical Huffman coding.
 while ind <= num_total
     while huff_size(ind) == tmp_len_code
         ac_code_dec(ind) = tmp_code;
@@ -37,10 +37,7 @@ for i = 1:num_total
     code(i,1:huff_size(i)) = fliplr(code(i,1:huff_size(i)));
 end
 ac_order = [huff_val huff_size code];
-% ac_order = sortrows(ac_order,1);
 run = floor(ac_order(:,1)/16);
 size = mod(ac_order(:,1),16);
-% ac_table = [run size size + ac_order(:,2) ac_order(:,2:end)];
 ac_table = [run size huff_val ac_order(:,2:end)];
-% ac_table = sortrows(ac_table,3);
 end

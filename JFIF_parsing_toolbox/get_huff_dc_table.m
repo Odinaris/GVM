@@ -17,7 +17,7 @@ tmp_code = 0;
 tmp_len_code = code_len(1);
 dc_code_dec = zeros(num_total,1);
 ind = 1;
-% The code assignment follow by Canonical Huffman coding.
+% The code assignment is followed as Canonical Huffman coding.
 while ind <= num_total
     while code_len(ind) == tmp_len_code
         dc_code_dec(ind) = tmp_code;
@@ -36,6 +36,5 @@ for i = 1 : num_total
     end
 end
 dc_table = [cat code_len code];
-% dc_table = sortrows(dc_table,1);
 end
 

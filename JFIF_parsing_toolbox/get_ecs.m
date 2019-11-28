@@ -1,5 +1,5 @@
-function data_ecs = parse_sos(loc_ff, jpg_data, fidorg)
-% parse_sos - parse the SOS segment and get the entropy-coded data(from FFDA to FFD9(EOI)).
+function data_ecs = get_ecs(loc_ff, jpg_data, fidorg)
+% GET_ECS - get the entropy-coded data (from FFDA to FFD9(EOI)).
 % data_ecs - the entropy-coded data.
 ind_sos = find(jpg_data(loc_ff+1) == 218);
 ind_sos = loc_ff(ind_sos,1);  % the position of FFDA
