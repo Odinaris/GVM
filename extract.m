@@ -15,10 +15,10 @@ if length(loc_c4)>1
     table_huff_ac = get_huff_ac_table(data_huff_ac);
 end
 %% Parse the entropy-coded data.
-dec_ecs = dlt_zero(gen_ecs(loc_ff,jpg_data,fidorg));
-bin_sos = int2bin(dec_ecs,8);
-[m,n] = size(bin_sos);
-bin_sos = reshape(bin_sos.',[1 m*n]);flag = 1;
+dec_ecs = dlt_zero(get_ecs(loc_ff,jpg_data,fidorg));
+bin_ecs = int2bin(dec_ecs,8);
+[m,n] = size(bin_ecs);
+bin_ecs = reshape(bin_ecs.',[1 m*n]);flag = 1;
 dc_code = cell(blk_num,1);  % dc_code includes huffman bits and appended bits.
 ac_code = cell(blk_num,1);  % ac_code includes huffman bits and appended bits.
 dc_pos = ones(blk_num+1,1); % dc_pos includes the position of dc_code.
