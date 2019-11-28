@@ -13,7 +13,7 @@ num_slt_pks = 10;
 %% Set the parameters.
 img_name = 'Boat_70.jpg';
 stego_name = 'stego.jpg';
-%% Read an image.
+%% Test.
 cover = imread(img_name);
 stego = imread(stego_name);
 [fi,run_time_embed] = embed(img_name, secret, feasible_solutions, num_slt_pks);
