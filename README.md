@@ -7,7 +7,7 @@ JPEG is the most popular image format, which is widely used in our daily life. T
 
 ## Code running environment
 
-The code has been tested by Matlab R2019b on Windows 10. 
+The code has been tested by Matlab R2018b on Windows 10. 
 
 ## How to use
 
