@@ -6,7 +6,7 @@ table_huff_ac_default = load('table_huff_ac_default.mat');
 table_huff_ac_default = table_huff_ac_default.table_huff_ac;
 addpath(genpath(pwd));
 payload = 10000;
-rng(0,'twister');
+rng(1,'twister');
 secret = round(rand(1,payload)*1);
 num_slt_pks = 10;
 %% Set the parameters.

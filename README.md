@@ -11,7 +11,7 @@ The code has been tested by Matlab R2018b on Windows 10.
 
 ## How to use
 
-- Please see  see the comparison results before and after extraction in `demo_gvm.m`. The experimental results demonstrate our code can achieve the feature of high capacity and lossless, which are referred in our paper.
+- Please see the comparison results before and after extraction in `demo_gvm.m`. The experimental results demonstrate our code can achieve the feature of high capacity and lossless, which are referred in our paper.
 
 - You can run the  `demo_embed.m` to see the related results of embedding. In  `demo_embed.m`, the test image is `Boat_70.jpg`, which quality factor = 70.
 
