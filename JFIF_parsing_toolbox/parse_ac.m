@@ -11,13 +11,17 @@ pos_next_dc = pos_dc;
 tmp = ones(num_code,1); 
 while flag == false && num_ac < 63
     tmp = tmp.*(table(:,idx_code) == bits_sos(pos_next_dc));
-    if sum(tmp) == 1
+    if sum(tmp) == 1  
+        len_vlc_cur = idx_code - 5 + 1;
         idx_code = 5;   % reset the pointer.
         row = find(tmp);
         tmp = ones(num_code,1); % reset the temp vector.
         run = table(row, 1); 
         cat = table(row, 2);
-        len_vlc = table(row, 4);
+        len_vlc = table(row, 4);    
+        if len_vlc~=len_vlc_cur
+            pos_next_dc = pos_next_dc + len_vlc - len_vlc_cur;
+        end
         ac_vlc = table(row,5:5+len_vlc-1);
         ac_code{num_zrv,1} = row;
         ac_code{num_zrv,2} = [run,cat];
