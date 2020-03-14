@@ -21,7 +21,7 @@ The code has been tested by Matlab R2018b on Windows 10.
 
 ## Tips
 
-If you find any problems, please feel free to contact to the authors ([yangdu@stu.ahu.edu.cn](mailto:duyang@stu.ahu.edu.cn)).
+If you find any problems, please feel free to contact to the authors ([duyang@stu.ahu.edu.cn](mailto:duyang@stu.ahu.edu.cn)).
 
 
 
